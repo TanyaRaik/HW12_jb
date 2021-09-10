@@ -1,44 +1,67 @@
-# Project in Allure TestOps with manual & automated tests
-<a target="_blank" href="https://allure.autotests.cloud/project/%s">allure.autotests.cloud/project/%s</a> (ask admin@qa.guru for access)
+# Автотесты на **JetBranis**, [**https://www.jetbrains.com/**](https://www.jetbrains.com/)
 
-# Jenkins job
-<a target="_blank" href="https://jenkins.autotests.cloud/job/%s">jenkins.autotests.cloud/job/%s</a>
+## Стек и инструменты
+ Тесты были написаны на Java + JUnit5 + Selenide + Gradle
 
+| Java | Gradle | Junit5 | Selenide |
+|:----:|:------:|:------:|:--------:|
+| <img src="images/JAVA.svg" width="40" height="40"> | <img src="images/Gradle.svg" width="40" height="40"> | <img src="images/Junit5.svg" width="40" height="40"> | <img src="images/Selenide.svg" width="40" height="40"> |
 
-# USAGE examples
+Запускаются и прогоняются через Jenkins + Selenoid
 
-### For run remote tests need fill remote.properties or to pass value:
+| Jenkins | Selenoid | 
+|:--------:|:-------------:|
+| <img src="images/Jenkins.svg" width="40" height="40"> | <img src="images/Selenoid.svg" width="40" height="40"> | 
+
+С отчетами в Allure + Telegram
+| Allure Report | Telegram |
+|:---------:|:--------:|
+| <img src="images/Allure Report.svg" width="40" height="40"> | <img src="images/Telegram.svg" width="40" height="40"> |
+
+## Запуск через Jenkins https://jenkins.autotests.cloud/job/hw12RikeV2/
+
+### С какими параметрами можно запустить тесты:
 
 * browser (default chrome)
-* browserVersion (default 89.0)
+* browserVersion (default 91.0)
 * browserSize (default 1920x1080)
 * browserMobileView (mobile device name, for example iPhone X)
 * remoteDriverUrl (url address from selenoid or grid)
 * videoStorage (url address where you should get video)
 * threads (number of threads)
+Пример настроек перед запуском сборки в Jenkins:
 
+### Пример странички с выбором параметров сборки
+![alt "Выбор параметров"](./images/jenkinsParamsExample.png)
 
-Run tests with filled remote.properties:
+### Как запустить тесты из командной строки
+Запустить тесты с дефолтными параметрами:
 ```bash
 gradle clean test
 ```
 
-Run tests with not filled remote.properties:
+Запустить тесты с нужными нам параметрами:
 ```bash
-gradle clean -DremoteDriverUrl=https://%s:%s@selenoid.autotests.cloud/wd/hub/ -DvideoStorage=https://selenoid.autotests.cloud/video/ -Dthreads=1 test
+gradle clean -DremoteDriverUrl=https://user1:1234@selenoid.autotests.cloud/wd/hub/ -DvideoStorage=https://selenoid.autotests.cloud/video/ -Dthreads=1 test
 ```
 
-Serve report:
+### Сформировать отчет в Allure:
 ```bash
 allure serve build/allure-results
 ```
+## Прогоняются тесты в Selenoid https://selenoid.autotests.cloud/#/
+### Пример прогона теста в Selenoid
+![alt "Video from Selenoid"](./images/TestExample.gif "Video from Selenoid")
 
+## После прогона формируется отчет в Allure
+![alt "Выбор параметров"](./images/AllureNotifications.png)
+c такими полезными аттачами, как логи, скриншоты и видео прохождения каждого теста
+![alt "Выбор параметров"](./images/Attachments.png)
+более детальную информацию можно посмотреть в Allure TestOps
+![alt "Выбор параметров"](./images/AllureTestOps.png)
 
-###### For further development there are some example tests in src/test/java/cloud.autotests/tests/demowebshop
-* remove @Disabled("...") annotation to run tests
-```bash
-gradle clean demowebshop
-```
+## В Telegram отправляется уведомление с результатами
+![alt "Выбор параметров"](./images/TelegramNotifications.png)
 
-:heart: <a target="_blank" href="https://qa.guru">qa.guru</a><br/>
-:blue_heart: <a target="_blank" href="https://t.me/qa_automation">t.me/qa_automation</a>
+## Контакты
+:airplane: Telegram - @Tanya_Raik
